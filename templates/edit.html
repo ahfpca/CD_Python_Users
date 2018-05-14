@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>User</title>
+</head>
+<body>
+    <br>
+    <br>
+    <div class="container">
+        <!-- Title -->
+        <div class="row">
+            {% if callMode == 0: %}
+                <!-- New Record -->
+                <h1>Add a new user</h1>
+            {% else: %}
+                <!-- Edit Record -->
+                <h1>Edit User {{ user.id }}</h1>
+            {% endif %}
+        </div>
+        <!-- Errors -->
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+            {% if errors %}
+                {% for message in errors %}
+                    <h4 class="row error">{{ message }}</h4>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% with errors = get_flashed_messages(category_filter=["message"]) %}
+            {% if errors %}
+                {% for message in errors %}
+                    <h4 class="row message">{{ message }}</h4>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <br>
+        <!-- Data Entry -->
+        {% if callMode == 0: %}
+            <!-- Create Record -->
+            <form action="/create" method="post">                
+                <div class="">
+                    <label class="row dField" for="first_name">First name:</label>
+                    {% with errors = get_flashed_messages(category_filter=["first_name"]) %}
+                        {% if errors %}
+                            {% for message in errors %}
+                                <label class="row error">{{ message }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input class="row" type="text" name="first_name" id="first_name" value="{{ session['first_name'] }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="last_name">Last name:</label>
+                    {% with errors = get_flashed_messages(category_filter=["last_name"]) %}
+                        {% if errors %}
+                            {% for message in errors %}
+                                <label class="row error">{{ message }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input class="row" type="text" name="last_name" id="last_name" value="{{ session['last_name'] }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="email">Email:</label>
+                    {% with errors = get_flashed_messages(category_filter=["email"]) %}
+                        {% if errors %}
+                            {% for message in errors %}
+                                <label class="row error">{{ message }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input class="row" type="text" name="email" id="email" value="{{ session['email'] }}">
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Create">
+                </div>
+                <br>
+                <div class="row">
+                    <a href="/users">Go Back</a>
+                </div>
+            </form>
+        {% else: %}
+            <!-- Edit Record -->
+            <form action="/update" method="post">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <div class="">
+                    <label class="row dField" for="first_name">First name:</label>
+                    {% with errors = get_flashed_messages(category_filter=["first_name"]) %}
+                        {% if errors %}
+                            {% for message in errors %}
+                                <label class="row error">{{ message }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input class="row" type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="last_name">Last name:</label>
+                    {% with errors = get_flashed_messages(category_filter=["last_name"]) %}
+                        {% if errors %}
+                            {% for message in errors %}
+                                <label class="row error">{{ message }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input class="row" type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
+                </div>
+                <div class="">
+                    <label class="row dField" for="email">Email:</label>
+                    {% with errors = get_flashed_messages(category_filter=["email"]) %}
+                        {% if errors %}
+                            {% for message in errors %}
+                                <label class="row error">{{ message }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input class="row" type="text" name="email" id="email" value="{{ user.email }}">
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Update">
+                </div>
+                <br>
+                <div class="row">
+                    <a href="/users/{{ user.id }}">Show</a>
+                    <p>&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                    <a href="javascript:history.back()">Go Back</a>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>

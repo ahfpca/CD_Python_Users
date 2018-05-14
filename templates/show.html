@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>User</title>
+</head>
+<body>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <h1>User {{ user.id }}</h1>
+        </div>
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+            {% if errors %}
+                {% for message in errors %}
+                    <h4 class="row error">{{ message }}</h4>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% with errors = get_flashed_messages(category_filter=["message"]) %}
+            {% if errors %}
+                {% for message in errors %}
+                    <h4 class="row message">{{ message }}</h4>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <br>
+
+        <div class="row">
+            <p>Full name: {{ user.full_name }}</p>
+        </div>
+        <div class="row">
+            <p>Email: {{ user.email }}</p>
+        </div>
+        <div class="row">
+            <p>Created at: {{ user.cr_date }}</p>
+        </div>
+        <br>
+        <div class="row">
+            <a href="/users/{{ user.id }}/edit">Edit</a>
+            <p>&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+            <a href="/users/{{ user.id }}/delete">Delete</a>
+        </div>
+        <div class="row">
+            <a href="javascript:history.back()">Go Back</a>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
